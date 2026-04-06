@@ -2,6 +2,7 @@
 
 A full-stack project management application built with **React** (frontend) and **Spring Boot** (backend), featuring JWT authentication, role-based access control, and team collaboration.
 
+Design Documentation : https://docs.google.com/document/d/1oftKAXZL49T09TRKfee-uMe2cgbGBK-8Vnh8a3_RLAQ/edit?usp=sharing
 ---
 
 ## Tech Stack
