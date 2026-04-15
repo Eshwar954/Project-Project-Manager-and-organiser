@@ -46,6 +46,7 @@ export default function ProjectPage() {
   const [newComment,  setNewComment]  = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
 
+  const [loading,   setLoading]   = useState(true);
   const [error, setError] = useState("");
   const [msg,   setMsg]   = useState("");
 
@@ -61,12 +62,19 @@ export default function ProjectPage() {
         projectAPI.progress(id),
         projectAPI.members(id),
       ]);
-      setProject(allProjects.find(p => p.id === parseInt(id)) || null);
-      setTasks(taskList);
-      setProgress(prog);
-      setMembers(memberList);
+      const found = allProjects.find(p => p.id === parseInt(id));
+      if (!found) {
+        setError("Project not found or access denied.");
+      } else {
+        setProject(found);
+        setTasks(taskList);
+        setProgress(prog);
+        setMembers(memberList);
+      }
     } catch {
       setError("Failed to load project data.");
+    } finally {
+      setLoading(false);
     }
   }, [id]);
 
@@ -135,9 +143,19 @@ export default function ProjectPage() {
 
   // ── Render ─────────────────────────────────────────────────────────────────
 
-  if (!project) return (
+  if (loading) return (
     <div style={{ padding: 48, color: "#94a3b8", fontFamily: "Inter, sans-serif" }}>Loading project…</div>
   );
+
+  if (error && !project) return (
+    <div style={{ padding: 48, color: "#dc2626", fontFamily: "Inter, sans-serif" }}>
+      <h2 style={{ marginBottom: 12 }}>Error</h2>
+      <p style={{ marginBottom: 20 }}>{error}</p>
+      <Link to="/dashboard" style={{ color: "#2563eb", fontWeight: 600, textDecoration: "none" }}>← Back to Dashboard</Link>
+    </div>
+  );
+
+  if (!project) return null;
 
   const pct = progress.progress;
 
@@ -148,7 +166,12 @@ export default function ProjectPage() {
       <header style={S.navbar}>
         <div style={S.navInner}>
           <div style={S.navLeft}>
-            <button style={S.backBtn} onClick={() => navigate("/dashboard")}>← Dashboard</button>
+            <Link to="/dashboard" style={S.backBtnLink}>← Dashboard</Link>
+            <span style={S.separator}>|</span>
+            <Link to="/dashboard" style={{ ...S.navBrand, textDecoration: 'none' }}>
+              <div style={S.brandIconSm}>P</div>
+              <span style={S.brandNameSm}>ProjectBoard</span>
+            </Link>
             <span style={S.separator}>|</span>
             <span style={S.projectTitle}>{project.name}</span>
             <span style={{ ...S.badge, background: isAdmin ? "#dbeafe" : "#dcfce7", color: isAdmin ? "#1e40af" : "#15803d" }}>
@@ -156,8 +179,9 @@ export default function ProjectPage() {
             </span>
           </div>
           <nav style={S.navLinks}>
-            <Link to="/team"    style={S.navLink}>Team</Link>
-            <Link to="/profile" style={S.navLink}>Profile</Link>
+            <Link to="/dashboard" style={S.navLink}>Dashboard</Link>
+            <Link to="/team"      style={S.navLink}>Team</Link>
+            <Link to="/profile"   style={S.navLink}>Profile</Link>
           </nav>
         </div>
       </header>
@@ -371,7 +395,9 @@ const S = {
   navbar: { background: "#fff", borderBottom: "1px solid #e2e8f0", position: "sticky", top: 0, zIndex: 100 },
   navInner: { maxWidth: 1200, margin: "0 auto", padding: "0 24px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between" },
   navLeft: { display: "flex", alignItems: "center", gap: 12 },
-  backBtn: { padding: "7px 14px", border: "1px solid #cbd5e1", borderRadius: 7, background: "#fff", color: "#374151", fontWeight: 600, fontSize: 13, cursor: "pointer" },
+  backBtnLink: { padding: "7px 14px", border: "1px solid #cbd5e1", borderRadius: 7, background: "#fff", color: "#374151", fontWeight: 600, fontSize: 13, cursor: "pointer", textDecoration: "none" },
+  brandIconSm: { width: 24, height: 24, background: "#2563eb", color: "#fff", borderRadius: 5, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 12 },
+  brandNameSm: { fontWeight: 700, fontSize: 12, color: "#0f172a", marginLeft: 8 },
   separator: { color: "#e2e8f0", fontSize: 18 },
   projectTitle: { fontSize: 15, fontWeight: 700, color: "#0f172a" },
   badge: { fontSize: 10, fontWeight: 700, padding: "3px 9px", borderRadius: 20, letterSpacing: ".04em", textTransform: "uppercase" },

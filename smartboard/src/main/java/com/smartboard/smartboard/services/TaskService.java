@@ -40,6 +40,9 @@ public class TaskService {
                 ? req.getPriority().toUpperCase()
                 : "MEDIUM";
 
+        if (req.getAssignedTo() != null && !project.getMemberIds().contains(req.getAssignedTo()))
+            throw new RuntimeException("Assigned user is not a member of this project");
+
         Task task = new Task();
         task.setTitle(req.getTitle().trim());
         task.setDescription(req.getDescription());

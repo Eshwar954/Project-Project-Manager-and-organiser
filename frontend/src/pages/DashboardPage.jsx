@@ -39,10 +39,10 @@ export default function DashboardPage() {
       {/* Top navigation bar */}
       <header style={S.navbar}>
         <div style={S.navInner}>
-          <div style={S.navBrand}>
+          <Link to="/dashboard" style={{ ...S.navBrand, textDecoration: 'none' }}>
             <div style={S.brandIcon}>P</div>
             <span style={S.brandName}>ProjectBoard</span>
-          </div>
+          </Link>
 
           <nav style={S.navLinks}>
             <Link to="/dashboard" style={{ ...S.navLink, ...S.navLinkActive }}>Dashboard</Link>

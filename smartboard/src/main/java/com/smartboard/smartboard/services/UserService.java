@@ -60,9 +60,6 @@ public class UserService {
 
         List<Long> projectIds = sharedProjects.stream().map(Project::getId).toList();
 
-        return taskRepository.findAll().stream()
-                .filter(t -> projectIds.contains(t.getProjectId())
-                          && memberId.equals(t.getAssignedTo()))
-                .toList();
+        return taskRepository.findByProjectIdInAndAssignedTo(projectIds, memberId);
     }
 }

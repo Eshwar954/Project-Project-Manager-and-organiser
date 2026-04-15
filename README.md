@@ -237,4 +237,3 @@ Add MySQL driver to `pom.xml`:
   <scope>runtime</scope>
 </dependency>
 ```
-

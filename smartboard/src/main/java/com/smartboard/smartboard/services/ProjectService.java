@@ -49,8 +49,7 @@ public class ProjectService {
     }
 
     public Map<String, Object> getProjectProgress(Long projectId) {
-        long total = taskRepository.countByProjectIdAndCompleted(projectId, false)
-                   + taskRepository.countByProjectIdAndCompleted(projectId, true);
+        long total = taskRepository.countByProjectId(projectId);
         long completed = taskRepository.countByProjectIdAndCompleted(projectId, true);
         double progress = total == 0 ? 0 : (completed * 100.0) / total;
 
