@@ -1,0 +1,147 @@
+/* ============================================================
+   ProjectBoard – Global Design System
+   Flat colors only. No gradients. No animations.
+   ============================================================ */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  /* Brand */
+  --brand:        #2563eb;   /* solid blue */
+  --brand-dark:   #1d4ed8;
+  --brand-light:  #dbeafe;   /* pale blue tint for badges */
+  --brand-text:   #1e40af;
+
+  /* Neutrals */
+  --bg:           #f1f5f9;   /* page background */
+  --surface:      #ffffff;   /* cards / panels */
+  --border:       #e2e8f0;
+  --border-dark:  #cbd5e1;
+
+  /* Text */
+  --text:         #0f172a;
+  --text-muted:   #64748b;
+  --text-faint:   #94a3b8;
+
+  /* Status */
+  --success:      #16a34a;
+  --success-bg:   #dcfce7;
+  --danger:       #dc2626;
+  --danger-bg:    #fee2e2;
+  --warning:      #d97706;
+  --warning-bg:   #fef3c7;
+
+  /* Misc */
+  --radius-sm:    4px;
+  --radius:       8px;
+  --radius-lg:    12px;
+  --shadow-sm:    0 1px 3px rgba(0,0,0,.08);
+  --shadow:       0 2px 8px rgba(0,0,0,.10);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Typography helpers ---------- */
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.25; }
+
+/* ---------- Form elements ---------- */
+input, select, textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-light);
+}
+
+input::placeholder { color: var(--text-faint); }
+
+/* ---------- Buttons ---------- */
+button {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 20px;
+}
+
+/* Primary */
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--brand-dark); }
+.btn-primary:disabled { background: var(--text-faint); cursor: not-allowed; }
+
+/* Ghost */
+.btn-ghost {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-dark);
+}
+.btn-ghost:hover { background: var(--bg); }
+
+/* Danger */
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+.btn-danger:hover { background: #b91c1c; }
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.badge-blue   { background: var(--brand-light);  color: var(--brand-text); }
+.badge-green  { background: var(--success-bg);   color: var(--success);    }
+.badge-red    { background: var(--danger-bg);     color: var(--danger);     }
+
+/* ---------- Card ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Utility ---------- */
+.text-muted   { color: var(--text-muted); }
+.text-faint   { color: var(--text-faint); }
+.text-danger  { color: var(--danger);     font-size: 13px; }
+.text-success { color: var(--success);    font-size: 13px; }
+.flex         { display: flex; }
+.flex-center  { display: flex; align-items: center; justify-content: center; }
+.gap-8        { gap: 8px; }
+.gap-12       { gap: 12px; }
+.mt-8         { margin-top: 8px; }
+.mt-16        { margin-top: 16px; }
+.w-full       { width: 100%; }
